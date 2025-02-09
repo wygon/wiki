@@ -1,0 +1,22 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Simmilar pages
+{% endblock %}
+
+{% block body %}
+    {% if query == '' %}
+        <h2>Type something in search bar</h2>
+    {% else  %}
+        <h2>Search results for "{{ query }}"</h2>
+        {% if results %}
+            <ul>
+                {% for result in results %}
+                <li><a href="/{{ result }}">{{ result }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

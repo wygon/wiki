@@ -1,0 +1,33 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>All Pages</h1>
+    <form method="post">
+    {% csrf_token %}
+    <ul>
+        {% for entry in entries %}
+        <li>
+            <input type="checkbox" class="entry-checkbox" name="entriesToDelete" value="{{ entry }}"> 
+            <a href="{{ entry }}">{{ entry }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <button class="btn btn-danger" type="submit" id="deleteButton" disabled>Delete</button>
+    {% comment %} <button class="btn btn-danger" disabled >Delete</button> {% endcomment %}
+    </form>
+    <script>
+        function toggleDeleteButton() {
+            const checkboxes = document.querySelectorAll('.entry-checkbox');
+            const deleteButton = document.getElementById('deleteButton');
+            deleteButton.disabled = !Array.from(checkboxes).some(checkbox => checkbox.checked);
+        }
+        document.querySelectorAll('.entry-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', toggleDeleteButton);
+        });
+        window.onload = toggleDeleteButton;
+    </script>
+{% endblock %}
