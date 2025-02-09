@@ -58,3 +58,4 @@ def ifExist(title):
     filename = f"entries/{title}.md"
     if default_storage.exists(filename):
         raise ValueError("Entries with this title exists")
+    

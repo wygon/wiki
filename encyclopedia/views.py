@@ -1,10 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_protect
 
 from . import util
 from .forms import NewPageForm#, SearchBarForm
 import random
 
+@csrf_protect
 def index(request):
     entries = util.list_entries()
     if request.method == "POST":
@@ -17,6 +19,7 @@ def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": entries
     })
+@csrf_protect
 def search(request):
     query = request.GET.get('query', '').strip()
     results = util.simmilarList(query.capitalize())
@@ -36,6 +39,7 @@ def page(request, title):
         "content" : util.markItDown(util.get_entry(title))
     })
 
+@csrf_protect
 def newPage(request):
     if request.method == "POST":
         form = NewPageForm(request.POST)
@@ -51,7 +55,7 @@ def newPage(request):
     return render(request, "encyclopedia/newPage.html",{
         "form" : form
     })
-
+@csrf_protect
 def editPage(request, title):
     content = util.get_entry(title)
 
