@@ -12,7 +12,7 @@
         {% for entry in entries %}
         <li>
             <input type="checkbox" class="entry-checkbox" name="entriesToDelete" value="{{ entry }}"> 
-            <a href="{{ entry }}">{{ entry }}</a>
+            <a href="{% url 'wiki' entry %}">{{ entry }}</a>
         </li>
         {% endfor %}
     </ul>

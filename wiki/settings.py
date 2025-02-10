@@ -26,7 +26,8 @@ SECRET_KEY = '%710m*zic)#0u((qugw#1@e^ty!c)9j04956v@ly(_86n$rg)h'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'frog02-30831.wykr.es'
+    'frog02-30831.wykr.es',
+    'localhost'
 ]
 
 

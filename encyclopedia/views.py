@@ -1,9 +1,8 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_protect
 
 from . import util
-from .forms import NewPageForm#, SearchBarForm
+from .forms import NewPageForm
 import random
 
 @csrf_protect
@@ -33,10 +32,11 @@ def search(request):
             "query" : query,
             "results" : results
         })
-def page(request, title):
+def wiki(request, title):
+    content = util.markItDown(util.get_entry(title))
     return render(request,"encyclopedia/page.html", {
         "title" : title,
-        "content" : util.markItDown(util.get_entry(title))
+        "content" : content
     })
 
 @csrf_protect
@@ -65,7 +65,7 @@ def editPage(request, title):
             new_title = editForm.cleaned_data["title"]
             new_content = editForm.cleaned_data["content"]
             util.save_entry(new_title.capitalize(), new_content)
-            return redirect(f"/{new_title}")
+            return redirect("wiki", title=new_title)
     else:
         editForm = NewPageForm(initial={"title": title, "content": content})
 
@@ -76,4 +76,4 @@ def editPage(request, title):
 def randomPage(request):
     randomPage = random.choice(util.list_entries())
     print(randomPage)
-    return page(request, randomPage)
+    return redirect('wiki', title=randomPage)

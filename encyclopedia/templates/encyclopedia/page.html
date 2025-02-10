@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <form action="editPage" method="get">
+    <form action="/{{ title }}/editPage" method="get">
         {% csrf_token %}
         {{ content | safe }}
-        <button class="btn btn-warning" type="submit" action="editPage/">Edit</button>
+        <button class="btn btn-warning" type="submit">Edit</button>
     </form>
 {% endblock %}
